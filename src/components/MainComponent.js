@@ -16,7 +16,7 @@ class Main extends Component {
     }
     onDishSelect(dishId) {
         this.setState({ selectedDish: dishId });
-        if (this.state.ext === 'png') {
+        if (this.state.ext === 'jpg') {
             this.setState({ ext: 'jpg' });
         } else {
             this.setState({ ext: 'png' });
