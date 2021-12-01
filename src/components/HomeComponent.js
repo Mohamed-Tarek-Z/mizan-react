@@ -1,15 +1,16 @@
 import React from 'react';
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
+import Card from 'react-bootstrap/Card';
+import { Outlet } from 'react-router-dom';
 
 let RenderCard = ({ item, ext }) => {
     return (
         <Card>
-            <CardImg src={item.image + ext} alt={item.name} />
-            <CardBody>
-                <CardTitle>{item.name}</CardTitle>
-                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
-                <CardText>{item.description}</CardText>
-            </CardBody>
+            <Card.Img src={item.image + ext} alt={item.name} />
+            <Card.Body>
+                <Card.Title>{item.name}</Card.Title>
+                {item.designation ? <Card.Subtitle>{item.designation}</Card.Subtitle> : null}
+                <Card.Text>{item.description}</Card.Text>
+            </Card.Body>
         </Card>
     );
 }
@@ -28,6 +29,7 @@ function Home(props) {
                     <RenderCard item={props.leader} ext={props.ext} />
                 </div>
             </div>
+            <Outlet/>
         </div>
     );
 }
