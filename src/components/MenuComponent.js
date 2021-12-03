@@ -8,8 +8,8 @@ function Menu({ dishes, ext, onClick }) {
         <div className="container">
             <div className="row">
                 <Breadcrumb>
-                    <Breadcrumb.Item>
-                        
+                    <Breadcrumb.Item href="/">
+                        Home
                     </Breadcrumb.Item>
                     <Breadcrumb.Item active>
                         Menu

@@ -7,7 +7,8 @@ function Contact(props) {
         <div className="container">
             <div className="row">
                 <Breadcrumb>
-                    <Breadcrumb.Item>
+                    <Breadcrumb.Item href="/">
+                        Home
                     </Breadcrumb.Item>
                     <Breadcrumb.Item active>
                         Contact Us

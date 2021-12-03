@@ -43,7 +43,7 @@ class Main extends Component {
 
                     <Route path='menu' element={<Menu dishes={this.state.dishes} ext={this.state.ext} onClick={this.onDishSelect} />} >
                     </Route>
-                        <Route path='menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments} ext={this.state.ext} />} />
+                    <Route path='menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments} ext={this.state.ext} />} />
 
 
                     <Route path='contactus' element={<Contact />} />
