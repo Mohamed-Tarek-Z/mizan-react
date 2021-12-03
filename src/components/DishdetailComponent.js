@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-import { Link, useParams } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 
 
 let RenderDish = ({ dish, ext }) => {
@@ -46,18 +46,13 @@ let RenderComments = ({ comments }) => {
     }
 }
 
-let DishDetail = ({ dishes, comments, ext }) => {
-    let params = useParams();
-    if (dishes != null) {
-        let D_Id = parseInt(params.dishId, 10);
-        let dish = dishes.filter((dish) => dish.id === D_Id)[0];
-        let dcomments = comments.filter((comment) => comment.dishId === D_Id);
+let DishDetail = ({ dish, comments, ext }) => {
+    if (dish != null) {
         return (
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
                         <Breadcrumb.Item>
-                            <Link to='/menu'>Menu</Link>
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>
                             {dish.name}
@@ -68,7 +63,7 @@ let DishDetail = ({ dishes, comments, ext }) => {
                     </div>
                     <div className="row">
                         <RenderDish dish={dish} ext={ext} />
-                        <RenderComments comments={dcomments} />
+                        <RenderComments comments={comments} />
                     </div>
                 </div>
             </div>

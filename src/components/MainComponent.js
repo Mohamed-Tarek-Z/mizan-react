@@ -9,7 +9,7 @@ import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
 import { PROMOTIONS } from '../shared/promotions';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 
 class Main extends Component {
     constructor(props) {
@@ -42,8 +42,9 @@ class Main extends Component {
                     <Route path='home' element={<Home dish={this.state.dishes.filter((dish) => dish.featured)[0]} leader={this.state.leaders.filter((leader) => leader.featured)[0]} promo={this.state.promotions.filter((promo) => promo.featured)[0]} ext={this.state.ext} />} />
 
                     <Route path='menu' element={<Menu dishes={this.state.dishes} ext={this.state.ext} onClick={this.onDishSelect} />} >
-                        <Route path=':dishId' element={DishWithId} />
                     </Route>
+                        <Route path='menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments} ext={this.state.ext} />} />
+
 
                     <Route path='contactus' element={<Contact />} />
 
@@ -54,9 +55,14 @@ class Main extends Component {
     }
 }
 
-const DishWithId = () => {
+const DishWithId = ({ dishes, comments, ext }) => {
+    let D_Id = parseInt(useParams().dishId, 10);
+    let dish = dishes.filter((dish) => dish.id === D_Id)[0];
+    let dcomments = comments.filter((comment) => comment.dishId === D_Id);
     return (
-        <DishDetail dishes={this.state.dishes} comments={this.state.comments} ext={this.state.ext} />
+        <DishDetail dish={dish} comments={dcomments} ext={ext} />
     );
 };
+
+
 export default Main;
