@@ -5,6 +5,7 @@ import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import DishDetail from './DishdetailComponent';
 import Contact from './ContactComponent';
+import About from './AboutComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { LEADERS } from '../shared/leaders';
@@ -47,6 +48,7 @@ class Main extends Component {
 
 
                     <Route path='contactus' element={<Contact />} />
+                    <Route path='aboutus' element={<About leaderss={this.state.leaders} ext={this.state.ext}/>} />
 
                 </Routes>
                 <Footer />

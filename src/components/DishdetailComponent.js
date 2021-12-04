@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
-//import { Link } from 'react-router-dom';
 
 
 let RenderDish = ({ dish, ext }) => {
