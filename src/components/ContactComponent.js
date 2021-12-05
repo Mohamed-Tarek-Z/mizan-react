@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Breadcrumb from 'react-bootstrap/breadcrumb';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
@@ -15,10 +15,17 @@ class Contact extends Component {
             email: '',
             agree: false,
             contactType: 'Tel.',
-            message: ''
+            message: '',
+            touched: {
+                firstname: false,
+                lastname: false,
+                telnum: false,
+                email: false
+            }
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
     }
 
     handleInputChange(event) {
@@ -30,6 +37,41 @@ class Contact extends Component {
         });
     }
 
+    handleBlur = (field) => (evt) => {
+        this.setState({
+            touched: {
+                ...this.state.touched, [field]: true
+            }
+        });
+    }
+
+    validate(firstname, lastname, telnum, email) {
+        let errors = {
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: '',
+        };
+
+        if (this.state.touched.firstname && firstname.length < 3)
+            errors.firstname = 'First name must be greater than 3 chars';
+        else if (this.state.touched.firstname && firstname.length > 10)
+            errors.firstname = 'First name must be less than 10 chars';
+
+        if (this.state.touched.lastname && lastname.length < 3)
+            errors.lastname = 'Last name must be greater than 3 chars';
+        else if (this.state.touched.lastname && lastname.length > 10)
+            errors.lastname = 'Last name must be less than 10 chars';
+
+        if (this.state.touched.telnum && !/^\d+$/.test(telnum))
+            errors.telnum = 'Tel num must be numbers only';
+
+        if (this.state.touched.email && !/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(email))
+            errors.email = 'Email must be an email address';
+
+        return errors;
+    }
+
     handleSubmit(event) {
         console.log('a7a: ' + JSON.stringify(this.state));
         alert('a7a: ' + JSON.stringify(this.state));
@@ -37,6 +79,7 @@ class Contact extends Component {
     }
 
     render() {
+        let errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
         return (
             <div className="container">
                 <div className="row">
@@ -91,7 +134,10 @@ class Contact extends Component {
                                     </Form.Label>
                                 </Col>
                                 <Col md={7}>
-                                    <Form.Control name='firstname' className="col-md-7" type="text" placeholder="First Name" value={this.state.firstname} onChange={this.handleInputChange} />
+                                    <Form.Control isValid={this.state.touched.firstname && errors.firstname === ''} isInvalid={this.state.touched.firstname && errors.firstname !== ''} onBlur={this.handleBlur('firstname')} name='firstname' className="col-md-7" type="text" placeholder="First Name" value={this.state.firstname} onChange={this.handleInputChange} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.firstname}
+                                    </Form.Control.Feedback>
                                 </Col>
                             </Form.Group>
 
@@ -102,7 +148,10 @@ class Contact extends Component {
                                     </Form.Label>
                                 </Col>
                                 <Col md={7}>
-                                    <Form.Control name='lastname' className="col-md-7" type="text" placeholder="Last Name" value={this.state.lastname} onChange={this.handleInputChange} />
+                                    <Form.Control isValid={this.state.touched.lastname && errors.lastname === ''} isInvalid={this.state.touched.lastname && errors.lastname !== ''} onBlur={this.handleBlur('lastname')} name='lastname' className="col-md-7" type="text" placeholder="Last Name" value={this.state.lastname} onChange={this.handleInputChange} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.lastname}
+                                    </Form.Control.Feedback>
                                 </Col>
                             </Form.Group>
 
@@ -113,7 +162,10 @@ class Contact extends Component {
                                     </Form.Label>
                                 </Col>
                                 <Col md={7}>
-                                    <Form.Control name='telnum' className="col-md-7" type="tel" placeholder="Tel. Number" value={this.state.telnum} onChange={this.handleInputChange} />
+                                    <Form.Control isValid={this.state.touched.telnum && errors.telnum === ''} isInvalid={this.state.touched.telnum && errors.telnum !== ''} onBlur={this.handleBlur('telnum')} name='telnum' className="col-md-7" type="tel" placeholder="Tel. Number" value={this.state.telnum} onChange={this.handleInputChange} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.telnum}
+                                    </Form.Control.Feedback>
                                 </Col>
                             </Form.Group>
 
@@ -124,7 +176,10 @@ class Contact extends Component {
                                     </Form.Label>
                                 </Col>
                                 <Col md={7}>
-                                    <Form.Control name='email' className="col-md-7" type="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} />
+                                    <Form.Control isValid={this.state.touched.email && errors.email === ''} isInvalid={this.state.touched.email && errors.email !== ''} onBlur={this.handleBlur('email')} name='email' className="col-md-7" type="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} required />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.email}
+                                    </Form.Control.Feedback>
                                 </Col>
                             </Form.Group>
 
