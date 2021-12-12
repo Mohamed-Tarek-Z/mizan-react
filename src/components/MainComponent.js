@@ -42,8 +42,7 @@ class Main extends Component {
 
                     <Route path='home' element={<Home dish={this.state.dishes.filter((dish) => dish.featured)[0]} leader={this.state.leaders.filter((leader) => leader.featured)[0]} promo={this.state.promotions.filter((promo) => promo.featured)[0]} ext={this.state.ext} />} />
 
-                    <Route path='menu' element={<Menu dishes={this.state.dishes} ext={this.state.ext} onClick={this.onDishSelect} />} >
-                    </Route>
+                    <Route path='menu' element={<Menu dishes={this.state.dishes} ext={this.state.ext} onClick={this.onDishSelect} />} />
                     <Route path='menu/:dishId' element={<DishWithId dishes={this.state.dishes} comments={this.state.comments} ext={this.state.ext} />} />
 
 

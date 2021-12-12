@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom'; 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import { Jumbotron } from 'reactstrap';
 
 
@@ -10,44 +12,52 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isNavOpen: false
+            isModalOpen: false
         }
-        this.toggleNavOpen = this.toggleNavOpen.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
-    toggleNavOpen() {
-        this.setState({ isNavOpen: !this.state.isNavOpen });
+
+    toggleModal() {
+        this.setState({ isModalOpen: !this.state.isModalOpen });
     }
+
+    handleLogin(event) {
+        this.toggleModal();
+        alert("Username = " + this.username.value + " Password = " + this.password.value + " remember = " + this.remember.checked);
+        event.preventDefault();
+    }
+
     render() {
         return (
             <>
                 <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
                     <div className='container'>
-                        <Navbar.Brand className='mr-auto' href="/"><img src='assets/images/logo.png' height='30' width='41' alt='الصفا و المروة للغزل' /></Navbar.Brand>
+                        <Navbar.Brand className='mr-auto' href="/home"><img src='assets/images/logo.png' height='30' width='41' alt='الصفا و المروة للغزل' /></Navbar.Brand>
                         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                         <Navbar.Collapse id='responsive-navbar-nav'>
-                            <Nav navbar>
+                            <Nav activeKey={'home'} className="me-auto" >
+                                <Nav.Link href='home'>
+                                    <span className='fa fa-home fa-lg'> Home </span>
+                                </Nav.Link>
+                                <Nav.Link href='menu'>
+                                    <span className='fa fa-list fa-lg'> Menu </span>
+                                </Nav.Link>
+                                <Nav.Link href='aboutus'>
+                                    <span className='fa fa-info fa-lg'> About Us </span>
+                                </Nav.Link>
+                                <Nav.Link href='contactus'>
+                                    <span className='fa fa-address-card fa-lg'> Contact Us </span>
+                                </Nav.Link>
+                            </Nav>
+                            <Nav>
                                 <Nav.Item>
-                                    <Link className='nav-link' to='home'>
-                                        <span className='fa fa-home fa-lg'> Home </span>
-                                    </Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Link className='nav-link' to='aboutus'>
-                                        <span className='fa fa-info fa-lg'> About Us </span>
-                                    </Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Link className='nav-link' to='menu'>
-                                        <span className='fa fa-list fa-lg'> Menu </span>
-                                    </Link>
-                                </Nav.Item>
-                                <Nav.Item>
-                                    <Link className='nav-link' to='contactus'>
-                                        <span className='fa fa-address-card fa-lg'> Contact Us </span>
-                                    </Link>
+                                    <Button variant="primary" onClick={this.toggleModal} >
+                                        <span className='fa fa-sign-in fa-lg'> Login</span>
+                                    </Button>
                                 </Nav.Item>
                             </Nav>
-                        </Navbar.Collapse >
+                        </Navbar.Collapse>
                     </div>
                 </Navbar>
                 <Jumbotron>
@@ -60,6 +70,35 @@ class Header extends Component {
                         </div>
                     </div>
                 </Jumbotron>
+                <Modal show={this.state.isModalOpen} onHide={() => this.toggleModal()}>
+                    <Modal.Header closeButton>
+                        LogIn
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={this.handleLogin}>
+                            <Form.Group controlId='username'>
+                                <Form.Label>
+                                    UserName
+                                </Form.Label>
+                                <Form.Control ref={(input) => this.username = input} className="col-md-7" type="text" placeholder="User Name" required />
+                            </Form.Group>
+                            <Form.Group controlId='password'>
+                                <Form.Label>
+                                    Password
+                                </Form.Label>
+                                <Form.Control ref={(input) => this.password = input} className="col-md-7" type="password" placeholder="password" required />
+                            </Form.Group>
+                            <Form.Group controlId='remember'>
+                                <Form.Check ref={(input) => this.remember = input} type='checkbox' label='Remember Me?' />
+                            </Form.Group>
+                            <Form.Group controlId='login'>
+                                <Button variant="primary" type="submit">
+                                    Login
+                                </Button>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                </Modal>
             </>
         );
     }

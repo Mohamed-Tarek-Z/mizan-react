@@ -51,7 +51,7 @@ let DishDetail = ({ dish, comments, ext }) => {
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <Breadcrumb.Item href="menu">
+                        <Breadcrumb.Item href="/menu">
                             Menu
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>

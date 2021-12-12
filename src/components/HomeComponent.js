@@ -1,6 +1,5 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { Outlet } from 'react-router-dom';
 
 let RenderCard = ({ item, ext }) => {
     return (
@@ -29,7 +28,6 @@ function Home(props) {
                     <RenderCard item={props.leader} ext={props.ext} />
                 </div>
             </div>
-            <Outlet/>
         </div>
     );
 }
