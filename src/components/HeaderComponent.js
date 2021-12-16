@@ -36,17 +36,17 @@ class Header extends Component {
                         <Navbar.Brand className='mr-auto' href="/home"><img src='assets/images/logo.png' height='30' width='41' alt='الصفا و المروة للغزل' /></Navbar.Brand>
                         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                         <Navbar.Collapse id='responsive-navbar-nav'>
-                            <Nav activeKey={'home'} className="me-auto" >
-                                <Nav.Link href='home'>
+                            <Nav className="me-auto" >
+                                <Nav.Link href='/home'>
                                     <span className='fa fa-home fa-lg'> Home </span>
                                 </Nav.Link>
-                                <Nav.Link href='menu'>
+                                <Nav.Link href='/menu'>
                                     <span className='fa fa-list fa-lg'> Menu </span>
                                 </Nav.Link>
-                                <Nav.Link href='aboutus'>
+                                <Nav.Link href='/aboutus'>
                                     <span className='fa fa-info fa-lg'> About Us </span>
                                 </Nav.Link>
-                                <Nav.Link href='contactus'>
+                                <Nav.Link href='/contactus'>
                                     <span className='fa fa-address-card fa-lg'> Contact Us </span>
                                 </Nav.Link>
                             </Nav>
