@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import Breadcrumb from 'react-bootstrap/breadcrumb';
 import { Form, Field } from 'react-final-form';
 
+const required = (value) => (value ? undefined : "Required");
+const validPhone = (value) => (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(value) ? undefined : "Must be valid US Phone");
+const validEmail = (value) => (/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(value) ? undefined : "Must be valid Email");
+const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
+const minLength = (len) => (val) => ((val) && (val.length >= len)) ? undefined : `Must be greater than ${len} characters`;
+
+const composeValidators = (...validators) => (value) =>
+    validators.reduce((error, validator) => error || validator(value), undefined);
+
+const Error = ({ name }) => (
+    <Field name={name} subscription={{ error: true, touched: true }}>
+        {({ meta: { error, touched } }) => (error && touched ? <span className="text-danger">{error}</span> : null)}
+    </Field>
+);
+
+
 class Contact extends Component {
     constructor(props) {
         super(props);
@@ -68,19 +84,24 @@ class Contact extends Component {
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group my-2">
                                         <label>First Name</label>
-                                        <Field className="form-control" name="firstname" component="input" type="text" placeholder="First Name" />
+                                        <Field validate={composeValidators(required, minLength(3), maxLength(18))}
+                                            className="form-control" name="firstname" component="input" type="text" placeholder="First Name" />
+                                        <Error name="firstname" />
                                     </div>
                                     <div className="form-group my-2">
                                         <label>Last Name</label>
-                                        <Field className="form-control" name="lastname" component="input" type="text" placeholder="Last Name" />
+                                        <Field validate={composeValidators(required, minLength(3), maxLength(18))} className="form-control" name="lastname" component="input" type="text" placeholder="Last Name" />
+                                        <Error name="lastname" />
                                     </div>
                                     <div className="form-group my-2">
                                         <label>Contact Tel.</label>
-                                        <Field className="form-control" name="telnum" component="input" type="tel" placeholder="Tel. Number" />
+                                        <Field validate={composeValidators(required, validPhone)} className="form-control" name="telnum" component="input" type="tel" placeholder="Tel. Number" />
+                                        <Error name="telnum" />
                                     </div>
                                     <div className="form-group my-2">
                                         <label>Email</label>
-                                        <Field className="form-control" name="email" component="input" type="text" placeholder="Email" />
+                                        <Field validate={composeValidators(required, validEmail)} className="form-control" name="email" component="input" type="text" placeholder="Email" />
+                                        <Error name="email" />
                                     </div>
                                     <div className="row align-items-center mb-2">
                                         <div className="form-check col">
