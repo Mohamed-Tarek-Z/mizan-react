@@ -1,7 +1,89 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { Form, Field } from 'react-final-form';
 
+const required = (value) => (value ? undefined : "Required");
+const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
+const minLength = (len) => (val) => ((val) && (val.length >= len)) ? undefined : `Must be greater than ${len} characters`;
+
+const composeValidators = (...validators) => (value) =>
+    validators.reduce((error, validator) => error || validator(value), undefined);
+
+const Error = ({ name }) => (
+    <Field name={name} subscription={{ error: true, touched: true }}>
+        {({ meta: { error, touched } }) => (error && touched ? <span className="text-danger">{error}</span> : null)}
+    </Field>
+);
+
+class CommentForm extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isModalOpen: false
+        }
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    toggleModal() {
+        this.setState({ isModalOpen: !this.state.isModalOpen });
+    }
+
+    handleSubmit(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        this.toggleModal();
+    }
+    render() {
+        return (
+            <>
+                <Button variant="outline-secondary" onClick={this.toggleModal} >
+                    <span className='fa fa-comment'> Sumbit Comment</span>
+                </Button>
+                <Modal show={this.state.isModalOpen} onHide={() => this.toggleModal()}>
+                    <Modal.Header closeButton>
+                        Submit Comment
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form
+                            onSubmit={this.handleSubmit}
+                            render={({ handleSubmit }) => (
+                                <form onSubmit={handleSubmit}>
+                                    <div className="form-group my-2">
+                                        <label>Rating</label>
+                                        <div className="form-group">
+                                            <Field className="form-control" name="rating" component="select">
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                            </Field>
+                                        </div>
+                                    </div>
+                                    <div className="form-group my-2">
+                                        <label>Your Name</label>
+                                        <Field validate={composeValidators(required, minLength(3), maxLength(15))} className="form-control" name="author" component="input" type="text" placeholder="Your Name" />
+                                        <Error name="author" />
+                                    </div>
+                                    <div className="form-group my-2">
+                                        <label>Comment</label>
+                                        <Field className="form-control" name="comment" component="textarea" rows="6" placeholder="Leave a comment here" />
+                                    </div>
+                                    <button className="btn btn-primary" type="submit">Submit</button>
+                                </form>
+                            )}
+                        />
+                    </Modal.Body>
+                </Modal>
+            </>
+        );
+    }
+}
 
 let RenderDish = ({ dish, ext }) => {
     return (
@@ -32,6 +114,7 @@ let RenderComments = ({ comments }) => {
                         );
                     })}
                 </ul>
+                <CommentForm />
             </div>
 
         );
@@ -40,6 +123,7 @@ let RenderComments = ({ comments }) => {
             <div className="col-md-5 col-sm-12 m-1">
                 <h2>Comments</h2>
                 <p>No Comments Yet</p>
+                <CommentForm />
             </div>
         );
     }
