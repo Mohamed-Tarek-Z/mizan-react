@@ -85,10 +85,10 @@ class CommentForm extends Component {
     }
 }
 
-let RenderDish = ({ dish, ext }) => {
+let RenderDish = ({ dish, ext, onClicks }) => {
     return (
         <div className="col-md-5 col-sm-12 m-1">
-            <Card>
+            <Card onClick={() => onClicks(ext)}>
                 <Card.Img src={dish.image + ext} alt={dish.name} />
                 <Card.Body>
                     <Card.Title>{dish.name}</Card.Title>
@@ -129,7 +129,7 @@ let RenderComments = ({ comments }) => {
     }
 }
 
-let DishDetail = ({ dish, comments, ext }) => {
+let DishDetail = ({ dish, comments, ext, onClicks }) => {
     if (dish != null) {
         return (
             <div className="container">
@@ -146,7 +146,7 @@ let DishDetail = ({ dish, comments, ext }) => {
                         <h3>{dish.name}</h3><hr />
                     </div>
                     <div className="row">
-                        <RenderDish dish={dish} ext={ext} />
+                        <RenderDish dish={dish} ext={ext} onClicks={onClicks} />
                         <RenderComments comments={comments} />
                     </div>
                 </div>

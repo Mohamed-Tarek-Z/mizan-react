@@ -27,11 +27,7 @@ class Main extends Component {
     }
 
     onDishSelect(ext) {
-        if (ext === 'png') {
-            this.setState({ ext: 'jpg' });
-        } else {
-            this.setState({ ext: 'png' });
-        }
+        return true;
     }
 
     render() {
@@ -40,16 +36,11 @@ class Main extends Component {
                 <Header />
                 <Routes>
                     <Route path="*" element={<Home dish={this.props.dishes.filter((dish) => dish.featured)[0]} leader={this.props.leaders.filter((leader) => leader.featured)[0]} promo={this.props.promotions.filter((promo) => promo.featured)[0]} ext={this.props.ext} />} />
-
                     <Route path='home' element={<Home dish={this.props.dishes.filter((dish) => dish.featured)[0]} leader={this.props.leaders.filter((leader) => leader.featured)[0]} promo={this.props.promotions.filter((promo) => promo.featured)[0]} ext={this.props.ext} />} />
-
-                    <Route path='menu' element={<Menu dishes={this.props.dishes} ext={this.props.ext} onClick={this.onDishSelect} />} />
-                    <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} />} />
-
-
+                    <Route path='menu' element={<Menu dishes={this.props.dishes} ext={this.props.ext} onClicks={this.onDishSelect} />} />
+                    <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} onClicks={this.onDishSelect} />} />
                     <Route path='contactus' element={<Contact />} />
                     <Route path='aboutus' element={<About leaderss={this.props.leaders} ext={this.props.ext} />} />
-
                 </Routes>
                 <Footer />
             </div>
@@ -57,29 +48,29 @@ class Main extends Component {
     }
 }
 
-const DishWithId = ({ dishes, comments, ext }) => {
+const DishWithId = ({ dishes, comments, ext, onClicks }) => {
     let D_Id = parseInt(useParams().dishId, 10);
     let dish = dishes.filter((dish) => dish.id === D_Id)[0];
     let dcomments = comments.filter((comment) => comment.dishId === D_Id);
     return (
-        <DishDetail dish={dish} comments={dcomments} ext={ext} />
+        <DishDetail dish={dish} comments={dcomments} ext={ext} onClicks={onClicks} />
     );
 };
 
 let withRouter = (Component) => {
     const Wrapper = (props) => {
-      const history = useNavigate();
-      
-      return (
-        <Component
-          history={history}
-          {...props}
-          />
-      );
+        const history = useNavigate();
+
+        return (
+            <Component
+                history={history}
+                {...props}
+            />
+        );
     };
-    
+
     return Wrapper;
-  };
+};
 
 
 export default withRouter(connect(mapStateToProps)(Main));
