@@ -34,8 +34,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         this.toggleModal();
     }
     render() {
@@ -85,10 +84,10 @@ class CommentForm extends Component {
     }
 }
 
-let RenderDish = ({ dish, ext, onClicks }) => {
+let RenderDish = ({ dish, ext, changeimg }) => {
     return (
         <div className="col-md-5 col-sm-12 m-1">
-            <Card onClick={() => onClicks(ext)}>
+            <Card onClick={() => changeimg(ext)}>
                 <Card.Img src={dish.image + ext} alt={dish.name} />
                 <Card.Body>
                     <Card.Title>{dish.name}</Card.Title>
@@ -99,7 +98,7 @@ let RenderDish = ({ dish, ext, onClicks }) => {
     );
 }
 
-let RenderComments = ({ comments }) => {
+let RenderComments = ({ comments, addComment, dishId }) => {
     if (comments != null) {
         return (
             <div className="col-md-5 col-sm-12 m-1">
@@ -114,9 +113,8 @@ let RenderComments = ({ comments }) => {
                         );
                     })}
                 </ul>
-                <CommentForm />
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
-
         );
     } else {
         return (
@@ -129,7 +127,7 @@ let RenderComments = ({ comments }) => {
     }
 }
 
-let DishDetail = ({ dish, comments, ext, onClicks }) => {
+let DishDetail = ({ dish, comments, ext, addComment, changeimg }) => {
     if (dish != null) {
         return (
             <div className="container">
@@ -146,8 +144,8 @@ let DishDetail = ({ dish, comments, ext, onClicks }) => {
                         <h3>{dish.name}</h3><hr />
                     </div>
                     <div className="row">
-                        <RenderDish dish={dish} ext={ext} onClicks={onClicks} />
-                        <RenderComments comments={comments} />
+                        <RenderDish dish={dish} ext={ext} changeimg={changeimg} />
+                        <RenderComments comments={comments} addComment={addComment} dishId={dish.id} />
                     </div>
                 </div>
             </div>

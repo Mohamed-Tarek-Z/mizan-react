@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 
-function Menu({ dishes, ext, onClicks }) {
+function Menu({ dishes, ext, changeimg }) {
     return (
         <div className="container">
             <div className="row">
@@ -23,7 +23,7 @@ function Menu({ dishes, ext, onClicks }) {
                 {dishes.map((dish) => {
                     return (
                         <div key={dish.id} className="col-md-5 col-sm-12 m-4">
-                            <Card onClick={() => onClicks(ext)}>
+                            <Card onClick={() => changeimg(ext)}>
                                 <Link to={`/menu/${dish.id}`} key={dish.id}>
                                     <Card.Img width="100%" src={dish.image + ext} alt={dish.name} />
                                     <Card.ImgOverlay>
