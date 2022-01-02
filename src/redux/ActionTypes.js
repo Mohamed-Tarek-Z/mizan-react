@@ -1,2 +1,5 @@
 export let ADD_COMMENT = 'ADD_COMMENT';
+export let DISHES_LOADING = 'DISHES_LOADING';
+export let DISHES_FAILED = 'DISHES_FAILED';
+export let ADD_DISHES = 'ADD_DISHES';
 export let CHANGE_EXT = 'CHANGE_EXT';

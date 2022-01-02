@@ -4,6 +4,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Form, Field } from 'react-final-form';
+import { Loading } from './LoadingComponent';
 
 const required = (value) => (value ? undefined : "Required");
 const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
@@ -127,8 +128,24 @@ let RenderComments = ({ comments, addComment, dishId }) => {
     }
 }
 
-let DishDetail = ({ dish, comments, ext, addComment, changeimg }) => {
-    if (dish != null) {
+let DishDetail = ({ dish, comments, ext, addComment, changeimg, dishesLoading, dishesErrMess }) => {
+    if (dishesLoading)
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    else if (dishesErrMess)
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{dishesErrMess}</h4>
+                </div>
+            </div>
+        );
+    else if (dish != null) {
         return (
             <div className="container">
                 <div className="row">
