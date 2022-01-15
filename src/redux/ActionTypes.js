@@ -1,5 +1,13 @@
 export let ADD_COMMENT = 'ADD_COMMENT';
+export let CHANGE_EXT = 'CHANGE_EXT';
+export let ADD_DISHES = 'ADD_DISHES';
 export let DISHES_LOADING = 'DISHES_LOADING';
 export let DISHES_FAILED = 'DISHES_FAILED';
-export let ADD_DISHES = 'ADD_DISHES';
-export let CHANGE_EXT = 'CHANGE_EXT';
+export let ADD_COMMENTS = 'ADD_COMMENTS';
+export let COMMENTS_FAILED = 'COMMENTS_FAILED';
+export let ADD_PROMOS = 'ADD_PROMOS';
+export let PROMOS_LOADING = 'PROMOS_LOADING';
+export let PROMOS_FAILED = 'PROMOS_FAILED';
+export let ADD_LEADS = 'ADD_LEADS';
+export let LEADS_LOADING = 'LEADS_LOADING';
+export let LEADS_FAILED = 'LEADS_FAILED';

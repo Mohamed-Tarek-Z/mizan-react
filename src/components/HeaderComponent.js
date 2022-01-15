@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Jumbotron } from 'reactstrap';
+import { baseUrl } from '../shared/baseUrl';
 
 
 
@@ -33,7 +34,7 @@ class Header extends Component {
             <>
                 <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
                     <div className='container'>
-                        <Navbar.Brand className='mr-auto' href="/home"><img src='assets/images/logo.png' height='30' width='41' alt='الصفا و المروة للغزل' /></Navbar.Brand>
+                        <Navbar.Brand className='mr-auto' href="/home"><img src={baseUrl+'images/logo.'+ this.props.ext} height='30' width='41' alt='الصفا و المروة للغزل' /></Navbar.Brand>
                         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
                         <Navbar.Collapse id='responsive-navbar-nav'>
                             <Nav className="me-auto" >

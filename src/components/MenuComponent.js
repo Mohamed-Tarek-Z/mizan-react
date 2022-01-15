@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function Menu({ dishes, ext, changeimg }) {
     if (dishes.isLoading)
@@ -43,7 +44,7 @@ function Menu({ dishes, ext, changeimg }) {
                             <div key={dish.id} className="col-md-5 col-sm-12 m-4">
                                 <Card onClick={() => changeimg(ext)}>
                                     <Link to={`/menu/${dish.id}`} key={dish.id}>
-                                        <Card.Img width="100%" src={dish.image + ext} alt={dish.name} />
+                                        <Card.Img className='img-thumbnail' width="100%" src={baseUrl + dish.image + ext} alt={dish.name} />
                                         <Card.ImgOverlay>
                                             <Card.Title>{dish.name}</Card.Title>
                                         </Card.ImgOverlay>

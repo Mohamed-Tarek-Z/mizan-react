@@ -1,30 +1,39 @@
 import React from 'react';
+import { Loading } from './LoadingComponent';
 import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { baseUrl } from '../shared/baseUrl';
 
 
 
-let RenderLeader = ({ leader, ext }) => {
-    return (
-        <li className="media d-flex align-items-start">
-            <img className="flex-shrink-0 m-3 " width="5%" src={leader.image + ext} alt={leader.name} />
-            <div className="flex-grow-1 media-body">
-                <h4>{leader.name}</h4>
-                <i>{leader.designation}</i>
-                <p>{leader.description}</p>
-            </div>
-        </li>
-    );
+let RenderLeader = ({ leaders, ext }) => {
+    if (leaders.isLoading) {
+        return (
+            <Loading />
+        );
+    } else if (leaders.errMessage) {
+        return (
+            <h4>{leaders.errMessage}</h4>
+        );
+    } else {
+        return (
+            leaders.leaders.map((leader) => {
+                return (
+                    <li key={leader.id} className="media d-flex align-items-start">
+                        <img className="flex-shrink-0 m-3 " width="5%" src={baseUrl + leader.image + ext} alt={leader.name} />
+                        <div className="flex-grow-1 media-body">
+                            <h4>{leader.name}</h4>
+                            <i>{leader.designation}</i>
+                            <p>{leader.description}</p>
+                        </div>
+                    </li>
+                );
+            })
+        );
+    }
 }
 
-function About({ leaderss, ext }) {
-
-    const leaders = leaderss.map((leader) => {
-        return (
-            <RenderLeader key={leader.id} leader={leader} ext={ext} />
-        );
-    });
-
+function About({ leaders, ext }) {
     return (
         <div className="container">
             <div className="row">
@@ -80,7 +89,7 @@ function About({ leaderss, ext }) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12 border list-unstyled" tag='ul'>
-                    {leaders}
+                    <RenderLeader leaders={leaders} ext={ext} />
                 </div>
             </div>
         </div>

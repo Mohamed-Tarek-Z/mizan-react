@@ -17,6 +17,50 @@ const Error = ({ name }) => (
     </Field>
 );
 
+const MyForm = props => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div className="form-group my-2">
+                <label>First Name</label>
+                <Field validate={composeValidators(required, minLength(3), maxLength(18))}
+                    className="form-control" name="firstname" component="input" type="text" placeholder="First Name" />
+                <Error name="firstname" />
+            </div>
+            <div className="form-group my-2">
+                <label>Last Name</label>
+                <Field validate={composeValidators(required, minLength(3), maxLength(18))} className="form-control" name="lastname" component="input" type="text" placeholder="Last Name" />
+                <Error name="lastname" />
+            </div>
+            <div className="form-group my-2">
+                <label>Contact Tel.</label>
+                <Field validate={composeValidators(required, validPhone)} className="form-control" name="telnum" component="input" type="tel" placeholder="Tel. Number" />
+                <Error name="telnum" />
+            </div>
+            <div className="form-group my-2">
+                <label>Email</label>
+                <Field validate={composeValidators(required, validEmail)} className="form-control" name="email" component="input" type="text" placeholder="Email" />
+                <Error name="email" />
+            </div>
+            <div className="row align-items-center mb-2">
+                <div className="form-check col">
+                    <label className="form-check-label">May we Contact you?</label>
+                    <Field className="form-check-input" name="agree" component="input" type="checkbox" />
+                </div>
+                <div className="form-group col">
+                    <Field className="form-control" name="contactType" component="select">
+                        <option value='Tel.'>Tel.</option>
+                        <option value='Email'>Email</option>
+                    </Field>
+                </div>
+            </div>
+            <div className="form-group my-2">
+                <label>FeedBack</label>
+                <Field className="form-control" name="message" component="textarea" placeholder="Leave a comment here" />
+            </div>
+            <button className="btn btn-primary" type="submit">Submit</button>
+        </form>
+    );
+}
 
 class Contact extends Component {
     constructor(props) {
@@ -78,51 +122,7 @@ class Contact extends Component {
                         <h3>Send FeedBack</h3>
                     </div>
                     <div className="col-10 col-md-9 offset-2">
-                        <Form
-                            onSubmit={this.handleSubmit}
-                            render={({ handleSubmit }) => (
-                                <form onSubmit={handleSubmit}>
-                                    <div className="form-group my-2">
-                                        <label>First Name</label>
-                                        <Field validate={composeValidators(required, minLength(3), maxLength(18))}
-                                            className="form-control" name="firstname" component="input" type="text" placeholder="First Name" />
-                                        <Error name="firstname" />
-                                    </div>
-                                    <div className="form-group my-2">
-                                        <label>Last Name</label>
-                                        <Field validate={composeValidators(required, minLength(3), maxLength(18))} className="form-control" name="lastname" component="input" type="text" placeholder="Last Name" />
-                                        <Error name="lastname" />
-                                    </div>
-                                    <div className="form-group my-2">
-                                        <label>Contact Tel.</label>
-                                        <Field validate={composeValidators(required, validPhone)} className="form-control" name="telnum" component="input" type="tel" placeholder="Tel. Number" />
-                                        <Error name="telnum" />
-                                    </div>
-                                    <div className="form-group my-2">
-                                        <label>Email</label>
-                                        <Field validate={composeValidators(required, validEmail)} className="form-control" name="email" component="input" type="text" placeholder="Email" />
-                                        <Error name="email" />
-                                    </div>
-                                    <div className="row align-items-center mb-2">
-                                        <div className="form-check col">
-                                            <label className="form-check-label">May we Contact you?</label>
-                                            <Field className="form-check-input" name="agree" component="input" type="checkbox" />
-                                        </div>
-                                        <div className="form-group col">
-                                            <Field className="form-control" name="contactType" component="select">
-                                                <option value='Tel.'>Tel.</option>
-                                                <option value='Email'>Email</option>
-                                            </Field>
-                                        </div>
-                                    </div>
-                                    <div className="form-group my-2">
-                                        <label>FeedBack</label>
-                                        <Field className="form-control" name="message" component="textarea" placeholder="Leave a comment here" />
-                                    </div>
-                                    <button className="btn btn-primary" type="submit">Submit</button>
-                                </form>
-                            )}
-                        />
+                        <Form onSubmit={this.handleSubmit} component={MyForm} />
                     </div>
                 </div>
             </div>

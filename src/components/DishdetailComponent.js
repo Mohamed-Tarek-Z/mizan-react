@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Form, Field } from 'react-final-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (value) => (value ? undefined : "Required");
 const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
@@ -89,7 +90,7 @@ let RenderDish = ({ dish, ext, changeimg }) => {
     return (
         <div className="col-md-5 col-sm-12 m-1">
             <Card onClick={() => changeimg(ext)}>
-                <Card.Img src={dish.image + ext} alt={dish.name} />
+                <Card.Img className='img-thumbnail' src={baseUrl + dish.image + ext} alt={dish.name} />
                 <Card.Body>
                     <Card.Title>{dish.name}</Card.Title>
                     <Card.Text>{dish.description}</Card.Text>
@@ -99,8 +100,17 @@ let RenderDish = ({ dish, ext, changeimg }) => {
     );
 }
 
-let RenderComments = ({ comments, addComment, dishId }) => {
-    if (comments != null) {
+let RenderComments = ({ comments, addComment, dishId, commentsErrMess }) => {
+    if (commentsErrMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{commentsErrMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (comments != null) {
         return (
             <div className="col-md-5 col-sm-12 m-1">
                 <h2>Comments</h2>
@@ -128,7 +138,7 @@ let RenderComments = ({ comments, addComment, dishId }) => {
     }
 }
 
-let DishDetail = ({ dish, comments, ext, addComment, changeimg, dishesLoading, dishesErrMess }) => {
+let DishDetail = ({ dish, comments, ext, addComment, changeimg, dishesLoading, dishesErrMess, commentsErrMess }) => {
     if (dishesLoading)
         return (
             <div className="container">
@@ -162,7 +172,7 @@ let DishDetail = ({ dish, comments, ext, addComment, changeimg, dishesLoading, d
                     </div>
                     <div className="row">
                         <RenderDish dish={dish} ext={ext} changeimg={changeimg} />
-                        <RenderComments comments={comments} addComment={addComment} dishId={dish.id} />
+                        <RenderComments comments={comments} addComment={addComment} dishId={dish.id} commentsErrMess={commentsErrMess} />
                     </div>
                 </div>
             </div>
