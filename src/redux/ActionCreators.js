@@ -14,7 +14,18 @@ export let addComment = (dishId, rating, author, comment) => ({
 export let fetchDishes = () => (dispatch) => {
     dispatch(dishesLoading(true));
 
-    return fetch(baseUrl + 'dishes').then(response => response.json()).then(dishes => dispatch(addDishes(dishes)));
+    return fetch(baseUrl + 'dishes').then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    }).then(response => response.json()).then(dishes => dispatch(addDishes(dishes))).catch(error => dispatch(dishesFailed(error.message)));
 }
 
 export let dishesLoading = () => ({
@@ -41,7 +52,18 @@ export let changeExt = (ext) => ({
 
 
 export let fetchComments = () => (dispatch) => {
-    return fetch(baseUrl + 'comments').then(response => response.json()).then(comments => dispatch(addComments(comments)));
+    return fetch(baseUrl + 'comments').then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    }).then(response => response.json()).then(comments => dispatch(addComments(comments))).catch(error => dispatch(commentsFailed(error.message)));
 }
 
 export let commentsFailed = (errmessage) => ({
@@ -58,7 +80,18 @@ export let addComments = (comments) => ({
 export let fetchPromos = () => (dispatch) => {
     dispatch(promosLoading(true));
 
-    return fetch(baseUrl + 'promotions').then(response => response.json()).then(promos => dispatch(addPromos(promos)));
+    return fetch(baseUrl + 'promotions').then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    }).then(response => response.json()).then(promos => dispatch(addPromos(promos))).catch(error => dispatch(promosFailed(error.message)));
 }
 
 export let promosLoading = () => ({
@@ -79,7 +112,18 @@ export let addPromos = (promos) => ({
 export let fetchLeads = () => (dispatch) => {
     dispatch(leadsLoading(true));
 
-    return fetch(baseUrl + 'leaders').then(response => response.json()).then(leads => dispatch(addLeads(leads)));
+    return fetch(baseUrl + 'leaders').then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    }, error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    }).then(response => response.json()).then(leads => dispatch(addLeads(leads))).catch(error => dispatch(leadsFailed(error.message)));
 }
 
 export let leadsLoading = () => ({
