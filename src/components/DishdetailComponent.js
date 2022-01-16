@@ -36,7 +36,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
         this.toggleModal();
     }
     render() {
@@ -100,7 +100,7 @@ let RenderDish = ({ dish, ext, changeimg }) => {
     );
 }
 
-let RenderComments = ({ comments, addComment, dishId, commentsErrMess }) => {
+let RenderComments = ({ comments, postComment, dishId, commentsErrMess }) => {
     if (commentsErrMess) {
         return (
             <div className="container">
@@ -124,7 +124,7 @@ let RenderComments = ({ comments, addComment, dishId, commentsErrMess }) => {
                         );
                     })}
                 </ul>
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         );
     } else {
@@ -138,7 +138,7 @@ let RenderComments = ({ comments, addComment, dishId, commentsErrMess }) => {
     }
 }
 
-let DishDetail = ({ dish, comments, ext, addComment, changeimg, dishesLoading, dishesErrMess, commentsErrMess }) => {
+let DishDetail = ({ dish, comments, ext, postComment, changeimg, dishesLoading, dishesErrMess, commentsErrMess }) => {
     if (dishesLoading)
         return (
             <div className="container">
@@ -172,7 +172,7 @@ let DishDetail = ({ dish, comments, ext, addComment, changeimg, dishesLoading, d
                     </div>
                     <div className="row">
                         <RenderDish dish={dish} ext={ext} changeimg={changeimg} />
-                        <RenderComments comments={comments} addComment={addComment} dishId={dish.id} commentsErrMess={commentsErrMess} />
+                        <RenderComments comments={comments} postComment={postComment} dishId={dish.id} commentsErrMess={commentsErrMess} />
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment, changeExt, fetchDishes, fetchComments, fetchPromos, fetchLeads } from '../redux/ActionCreators';
+import { postComment, changeExt, fetchDishes, fetchComments, fetchPromos, fetchLeads } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
     changeExt: (ext) => dispatch(changeExt(ext)),
     fetchDishes: () => dispatch(fetchDishes()),
     fetchComments: () => dispatch(fetchComments()),
@@ -48,7 +48,7 @@ class Main extends Component {
 
                     <Route path='menu' element={<Menu dishes={this.props.dishes} ext={this.props.ext} changeimg={this.props.changeExt} />} />
 
-                    <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} addComment={this.props.addComment} changeimg={this.props.changeExt} />} />
+                    <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} postComment={this.props.postComment} changeimg={this.props.changeExt} />} />
 
                     <Route path='contactus' element={<Contact />} />
 
@@ -60,12 +60,12 @@ class Main extends Component {
     }
 }
 
-let DishWithId = ({ dishes, comments, ext, addComment, changeimg }) => {
+let DishWithId = ({ dishes, comments, ext, postComment, changeimg }) => {
     let D_Id = parseInt(useParams().dishId, 10);
     let dish = dishes.dishes.filter((dish) => dish.id === D_Id)[0];
     let dcomments = comments.comments.filter((comment) => comment.dishId === D_Id);
     return (
-        <DishDetail dish={dish} comments={dcomments} ext={ext} addComment={addComment} changeimg={changeimg} dishesLoading={dishes.isLoading} dishesErrMess={dishes.errMessage} commentsErrMess={comments.errMessage} />
+        <DishDetail dish={dish} comments={dcomments} ext={ext} postComment={postComment} changeimg={changeimg} dishesLoading={dishes.isLoading} dishesErrMess={dishes.errMessage} commentsErrMess={comments.errMessage} />
     );
 }
 
