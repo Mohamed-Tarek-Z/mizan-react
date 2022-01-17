@@ -6,9 +6,10 @@ import Home from './HomeComponent';
 import DishDetail from './DishdetailComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
-import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postComment, changeExt, fetchDishes, fetchComments, fetchPromos, fetchLeads } from '../redux/ActionCreators';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const mapStateToProps = state => {
     return {
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchLeads: () => dispatch(fetchLeads()),
 });
 
+
 class Main extends Component {
     componentDidMount() {
         this.props.fetchDishes();
@@ -40,24 +42,33 @@ class Main extends Component {
     render() {
         return (
             <div className="">
-                <Header ext={this.props.ext}/>
-                <Routes>
-                    <Route path="*" element={<Homepage dishes={this.props.dishes} leaders={this.props.leaders} promotions={this.props.promotions} ext={this.props.ext} />} />
+                <Header ext={this.props.ext} />
+                <TransitionGroup>
+                    <CSSTransition key={<LocationKey/>} classNames="page" timeout={300}>
+                        <Routes>
+                            <Route path="*" element={<Navigate replace to='home' />} />
 
-                    <Route path='home' element={<Homepage dishes={this.props.dishes} leaders={this.props.leaders} promotions={this.props.promotions} ext={this.props.ext} changeimg={this.props.changeExt}/>} />
+                            <Route path='home' element={<Homepage dishes={this.props.dishes} leaders={this.props.leaders} promotions={this.props.promotions} ext={this.props.ext} changeimg={this.props.changeExt} />} />
 
-                    <Route path='menu' element={<Menu dishes={this.props.dishes} ext={this.props.ext} changeimg={this.props.changeExt} />} />
+                            <Route path='menu' element={<Menu dishes={this.props.dishes} ext={this.props.ext} changeimg={this.props.changeExt} />} />
 
-                    <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} postComment={this.props.postComment} changeimg={this.props.changeExt} />} />
+                            <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} postComment={this.props.postComment} changeimg={this.props.changeExt} />} />
 
-                    <Route path='contactus' element={<Contact />} />
+                            <Route path='contactus' element={<Contact />} />
 
-                    <Route path='aboutus' element={<About leaders={this.props.leaders} ext={this.props.ext} />} />
-                </Routes>
+                            <Route path='aboutus' element={<About leaders={this.props.leaders} ext={this.props.ext} />} />
+                        </Routes>
+                    </CSSTransition>
+                </TransitionGroup>
                 <Footer />
             </div>
         );
     }
+}
+
+let LocationKey = () => {
+    const location = useLocation();
+    return (<>{location.key}</>);
 }
 
 let DishWithId = ({ dishes, comments, ext, postComment, changeimg }) => {
@@ -69,9 +80,9 @@ let DishWithId = ({ dishes, comments, ext, postComment, changeimg }) => {
     );
 }
 
-let Homepage = ({ dishes, leaders, promotions, ext, changeimg}) => {
+let Homepage = ({ dishes, leaders, promotions, ext, changeimg }) => {
     return (
-        <Home dish={dishes.dishes.filter((dish) => dish.featured)[0]} dishesLoading={dishes.isLoading} dishesErrMess={dishes.errMessage} leader={leaders.leaders.filter((leader) => leader.featured)[0]} leadersLoading={leaders.isLoading} leadersErrMess={leaders.errMessage} promo={promotions.promotions.filter((promo) => promo.featured)[0]} promotionsLoading={promotions.isLoading} promotionsErrMess={promotions.errMessage} ext={ext} changeimg={changeimg}/>
+        <Home dish={dishes.dishes.filter((dish) => dish.featured)[0]} dishesLoading={dishes.isLoading} dishesErrMess={dishes.errMessage} leader={leaders.leaders.filter((leader) => leader.featured)[0]} leadersLoading={leaders.isLoading} leadersErrMess={leaders.errMessage} promo={promotions.promotions.filter((promo) => promo.featured)[0]} promotionsLoading={promotions.isLoading} promotionsErrMess={promotions.errMessage} ext={ext} changeimg={changeimg} />
     );
 }
 
