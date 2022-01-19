@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform } from 'react-animation-components';
 
 let RenderCard = ({ item, ext, isLoading, ErrMess, changeimg }) => {
     if (isLoading || !item) {
@@ -14,14 +15,16 @@ let RenderCard = ({ item, ext, isLoading, ErrMess, changeimg }) => {
         );
     } else
         return (
-            <Card onClick={() => changeimg(ext)}>
-                <Card.Img className='img-thumbnail' src={baseUrl + item.image + ext} alt={item.name} />
-                <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
-                    {item.designation ? <Card.Subtitle>{item.designation}</Card.Subtitle> : null}
-                    <Card.Text>{item.description}</Card.Text>
-                </Card.Body>
-            </Card>
+            <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
+                <Card onClick={() => changeimg(ext)}>
+                    <Card.Img className='img-thumbnail' src={baseUrl + item.image + ext} alt={item.name} />
+                    <Card.Body>
+                        <Card.Title>{item.name}</Card.Title>
+                        {item.designation ? <Card.Subtitle>{item.designation}</Card.Subtitle> : null}
+                        <Card.Text>{item.description}</Card.Text>
+                    </Card.Body>
+                </Card>
+            </FadeTransform>
         );
 }
 

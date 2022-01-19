@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Menu from './MenuComponent';
@@ -31,44 +31,33 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-class Main extends Component {
-    componentDidMount() {
-        this.props.fetchDishes();
-        this.props.fetchComments();
-        this.props.fetchPromos();
-        this.props.fetchLeads();
-    }
+function Main(props) {
+    let location = useLocation();
+    useEffect(() => {
+        props.fetchDishes();
+        props.fetchComments();
+        props.fetchPromos();
+        props.fetchLeads();
+    }, []);
 
-    render() {
-        return (
-            <div className="">
-                <Header ext={this.props.ext} />
-                <TransitionGroup>
-                    <CSSTransition key={<LocationKey/>} classNames="page" timeout={300}>
-                        <Routes>
-                            <Route path="*" element={<Navigate replace to='home' />} />
-
-                            <Route path='home' element={<Homepage dishes={this.props.dishes} leaders={this.props.leaders} promotions={this.props.promotions} ext={this.props.ext} changeimg={this.props.changeExt} />} />
-
-                            <Route path='menu' element={<Menu dishes={this.props.dishes} ext={this.props.ext} changeimg={this.props.changeExt} />} />
-
-                            <Route path='menu/:dishId' element={<DishWithId dishes={this.props.dishes} comments={this.props.comments} ext={this.props.ext} postComment={this.props.postComment} changeimg={this.props.changeExt} />} />
-
-                            <Route path='contactus' element={<Contact />} />
-
-                            <Route path='aboutus' element={<About leaders={this.props.leaders} ext={this.props.ext} />} />
-                        </Routes>
-                    </CSSTransition>
-                </TransitionGroup>
-                <Footer />
-            </div>
-        );
-    }
-}
-
-let LocationKey = () => {
-    const location = useLocation();
-    return (<>{location.key}</>);
+    return (
+        <div className="">
+            <Header ext={props.ext} />
+            <TransitionGroup>
+                <CSSTransition key={location.key} classNames="page" timeout={300}>
+                    <Routes>
+                        <Route path="*" element={<Navigate replace to='home' />} />
+                        <Route path='home' element={<Homepage dishes={props.dishes} leaders={props.leaders} promotions={props.promotions} ext={props.ext} changeimg={props.changeExt} />} />
+                        <Route path='menu' element={<Menu dishes={props.dishes} ext={props.ext} changeimg={props.changeExt} />} />
+                        <Route path='menu/:dishId' element={<DishWithId dishes={props.dishes} comments={props.comments} ext={props.ext} postComment={props.postComment} changeimg={props.changeExt} />} />
+                        <Route path='contactus' element={<Contact />} />
+                        <Route path='aboutus' element={<About leaders={props.leaders} ext={props.ext} />} />
+                    </Routes>
+                </CSSTransition>
+            </TransitionGroup>
+            <Footer />
+        </div>
+    );
 }
 
 let DishWithId = ({ dishes, comments, ext, postComment, changeimg }) => {
