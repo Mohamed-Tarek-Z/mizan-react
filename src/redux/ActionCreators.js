@@ -6,7 +6,7 @@ export let addComment = (comment) => ({
     payload: comment
 });
 
-export let postComment = (dishId, rating, author, comment)=> (dispatch) => {
+export let postComment = (dishId, rating, author, comment) => (dispatch) => {
     let newComment = {
         dishId: dishId,
         rating: rating,
@@ -23,22 +23,65 @@ export let postComment = (dishId, rating, author, comment)=> (dispatch) => {
         },
         credentials: 'same-origin'
     })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-        }
-    }, error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(response => dispatch(addComment(response)))
-    .catch(error => { console.log('Post comments ',error.message); alert('the comment could not be posted/nError: ' + error.message); });
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            let errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(response => dispatch(addComment(response)))
+        .catch(error => { console.log('Post comments ', error.message); alert('the comment could not be posted/nError: ' + error.message); });
 
+}
+export let addFeedback = (feedback) => ({
+    type: ActionTypes.ADD_FEEDBACK,
+    payload: feedback
+});
+
+export let postFeedback = (firstname, lastname, telNumber, email, agree, contactType, feedback) => (dispatch) => {
+    let newFeed = {
+        firstname: firstname,
+        lastname: lastname,
+        telNumber: telNumber,
+        email: email,
+        agree: agree,
+        contactType: contactType,
+        feedback: feedback
+    }
+
+    return fetch(baseUrl + 'feedback', {
+        method: 'POST',
+        body: JSON.stringify(newFeed),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            let errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(response => {
+            dispatch(addFeedback(response));
+            alert('thanks for your feedback' + JSON.stringify(response));
+        })
+        .catch(error => { console.log('Post feedback ', error.message); alert('the feedback could not be posted/nError: ' + error.message); });
 }
 
 export let fetchDishes = () => (dispatch) => {

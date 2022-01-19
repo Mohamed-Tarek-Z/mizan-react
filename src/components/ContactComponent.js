@@ -3,8 +3,8 @@ import Breadcrumb from 'react-bootstrap/breadcrumb';
 import { Form, Field } from 'react-final-form';
 
 const required = (value) => (value ? undefined : "Required");
-const validPhone = (value) => (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(value) ? undefined : "Must be valid US Phone");
-const validEmail = (value) => (/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(value) ? undefined : "Must be valid Email");
+const validPhone = (value) => (value ? undefined : "Required");//(/^(\+\d{1,2}\s)$/.test(value) ? undefined : "Must be valid US Phone");
+const validEmail = (value) => (value ? undefined : "Required");//(/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(value) ? undefined : "Must be valid Email");
 const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
 const minLength = (len) => (val) => ((val) && (val.length >= len)) ? undefined : `Must be greater than ${len} characters`;
 
@@ -48,6 +48,7 @@ const MyForm = props => {
                 </div>
                 <div className="form-group col">
                     <Field className="form-control" name="contactType" component="select">
+                        <option></option>
                         <option value='Tel.'>Tel.</option>
                         <option value='Email'>Email</option>
                     </Field>
@@ -70,9 +71,7 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
-        // event.preventDefault();
+        this.props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree, values.contactType, values.message);
     }
 
     render() {

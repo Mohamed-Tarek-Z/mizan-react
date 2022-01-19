@@ -3,7 +3,7 @@ import { Loading } from './LoadingComponent';
 import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { baseUrl } from '../shared/baseUrl';
-
+import { Fade, Stagger } from 'react-animation-components';
 
 
 let RenderLeader = ({ leaders, ext }) => {
@@ -19,14 +19,16 @@ let RenderLeader = ({ leaders, ext }) => {
         return (
             leaders.leaders.map((leader) => {
                 return (
-                    <li key={leader.id} className="media d-flex align-items-start">
-                        <img className="flex-shrink-0 m-3 " width="5%" src={baseUrl + leader.image + ext} alt={leader.name} />
-                        <div className="flex-grow-1 media-body">
-                            <h4>{leader.name}</h4>
-                            <i>{leader.designation}</i>
-                            <p>{leader.description}</p>
-                        </div>
-                    </li>
+                    <Fade in>
+                        <li key={leader.id} className="media d-flex align-items-start">
+                            <img className="flex-shrink-0 m-3 " width="5%" src={baseUrl + leader.image + ext} alt={leader.name} />
+                            <div className="flex-grow-1 media-body">
+                                <h4>{leader.name}</h4>
+                                <i>{leader.designation}</i>
+                                <p>{leader.description}</p>
+                            </div>
+                        </li>
+                    </Fade>
                 );
             })
         );
@@ -89,7 +91,9 @@ function About({ leaders, ext }) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12 border list-unstyled" tag='ul'>
-                    <RenderLeader leaders={leaders} ext={ext} />
+                    <Stagger in>
+                        <RenderLeader leaders={leaders} ext={ext} />
+                    </Stagger>
                 </div>
             </div>
         </div>

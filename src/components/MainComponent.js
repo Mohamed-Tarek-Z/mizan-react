@@ -8,7 +8,7 @@ import Contact from './ContactComponent';
 import About from './AboutComponent';
 import { Routes, Route, Navigate, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { postComment, changeExt, fetchDishes, fetchComments, fetchPromos, fetchLeads } from '../redux/ActionCreators';
+import { postComment, changeExt, fetchDishes, fetchComments, fetchPromos, fetchLeads, postFeedback } from '../redux/ActionCreators';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const mapStateToProps = state => {
@@ -23,6 +23,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
+    postFeedback: (firstname, lastname, telNumber, email, agree, contactType, feedback) => dispatch(postFeedback(firstname, lastname, telNumber, email, agree, contactType, feedback)),
     changeExt: (ext) => dispatch(changeExt(ext)),
     fetchDishes: () => dispatch(fetchDishes()),
     fetchComments: () => dispatch(fetchComments()),
@@ -50,7 +51,7 @@ function Main(props) {
                         <Route path='home' element={<Homepage dishes={props.dishes} leaders={props.leaders} promotions={props.promotions} ext={props.ext} changeimg={props.changeExt} />} />
                         <Route path='menu' element={<Menu dishes={props.dishes} ext={props.ext} changeimg={props.changeExt} />} />
                         <Route path='menu/:dishId' element={<DishWithId dishes={props.dishes} comments={props.comments} ext={props.ext} postComment={props.postComment} changeimg={props.changeExt} />} />
-                        <Route path='contactus' element={<Contact />} />
+                        <Route path='contactus' element={<Contact postFeedback={props.postFeedback}/>} />
                         <Route path='aboutus' element={<About leaders={props.leaders} ext={props.ext} />} />
                     </Routes>
                 </CSSTransition>
