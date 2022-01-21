@@ -27,7 +27,7 @@ function Menu({ dishes, ext, changeimg }) {
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/home">
+                        <Breadcrumb.Item linkAs={Link} linkProps={{to:'/home'}} >
                             Home
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>
@@ -43,7 +43,7 @@ function Menu({ dishes, ext, changeimg }) {
                         return (
                             <div key={dish.id} className="col-md-5 col-sm-12 m-4">
                                 <Card onClick={() => changeimg(ext)}>
-                                    <Link to={`/menu/${dish.id}`} key={dish.id}>
+                                    <Link className="link-unstyled" to={`/menu/${dish.id}`}>
                                         <Card.Img className='img-thumbnail' width="100%" src={baseUrl + dish.image + ext} alt={dish.name} />
                                         <Card.ImgOverlay>
                                             <Card.Title>{dish.name}</Card.Title>

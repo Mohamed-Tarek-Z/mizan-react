@@ -3,6 +3,7 @@ import { Loading } from './LoadingComponent';
 import Card from 'react-bootstrap/Card';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { baseUrl } from '../shared/baseUrl';
+import { Link } from 'react-router-dom';
 import { Fade, Stagger } from 'react-animation-components';
 
 
@@ -19,8 +20,8 @@ let RenderLeader = ({ leaders, ext }) => {
         return (
             leaders.leaders.map((leader) => {
                 return (
-                    <Fade in>
-                        <li key={leader.id} className="media d-flex align-items-start">
+                    <Fade in key={leader.id}>
+                        <li className="media d-flex align-items-start">
                             <img className="flex-shrink-0 m-3 " width="5%" src={baseUrl + leader.image + ext} alt={leader.name} />
                             <div className="flex-grow-1 media-body">
                                 <h4>{leader.name}</h4>
@@ -40,7 +41,9 @@ function About({ leaders, ext }) {
         <div className="container">
             <div className="row">
                 <Breadcrumb>
-                    <Breadcrumb.Item href="/home">Home</Breadcrumb.Item>
+                    <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/home' }} >
+                        Home
+                    </Breadcrumb.Item>
                     <Breadcrumb.Item active>About Us</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="col-12">

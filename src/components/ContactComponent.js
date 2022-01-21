@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Breadcrumb from 'react-bootstrap/breadcrumb';
 import { Form, Field } from 'react-final-form';
+import { Link } from 'react-router-dom';
 
 const required = (value) => (value ? undefined : "Required");
-const validPhone = (value) => (value ? undefined : "Required");//(/^(\+\d{1,2}\s)$/.test(value) ? undefined : "Must be valid US Phone");
-const validEmail = (value) => (value ? undefined : "Required");//(/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(value) ? undefined : "Must be valid Email");
+const validPhone = (value) => (/^(\+\d{1,2}\s)$/.test(value) ? undefined : "Must be valid US Phone");
+const validEmail = (value) => (/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(value) ? undefined : "Must be valid Email");
 const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
 const minLength = (len) => (val) => ((val) && (val.length >= len)) ? undefined : `Must be greater than ${len} characters`;
 
@@ -43,14 +44,13 @@ const MyForm = props => {
             </div>
             <div className="row align-items-center mb-2">
                 <div className="form-check col">
-                    <label className="form-check-label">May we Contact you?</label>
                     <Field className="form-check-input" name="agree" component="input" type="checkbox" />
+                    <label className="form-check-label"> May we Contact you?</label>
                 </div>
                 <div className="form-group col">
                     <Field className="form-control" name="contactType" component="select">
-                        <option></option>
-                        <option value='Tel.'>Tel.</option>
                         <option value='Email'>Email</option>
+                        <option value='Tel.'>Tel.</option>
                     </Field>
                 </div>
             </div>
@@ -79,7 +79,7 @@ class Contact extends Component {
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/home">
+                        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/home' }} >
                             Home
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>

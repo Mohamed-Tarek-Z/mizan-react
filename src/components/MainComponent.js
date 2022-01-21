@@ -51,7 +51,7 @@ function Main(props) {
                         <Route path='home' element={<Homepage dishes={props.dishes} leaders={props.leaders} promotions={props.promotions} ext={props.ext} changeimg={props.changeExt} />} />
                         <Route path='menu' element={<Menu dishes={props.dishes} ext={props.ext} changeimg={props.changeExt} />} />
                         <Route path='menu/:dishId' element={<DishWithId dishes={props.dishes} comments={props.comments} ext={props.ext} postComment={props.postComment} changeimg={props.changeExt} />} />
-                        <Route path='contactus' element={<Contact postFeedback={props.postFeedback}/>} />
+                        <Route path='contactus' element={<Contact postFeedback={props.postFeedback} />} />
                         <Route path='aboutus' element={<About leaders={props.leaders} ext={props.ext} />} />
                     </Routes>
                 </CSSTransition>

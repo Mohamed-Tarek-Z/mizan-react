@@ -7,6 +7,7 @@ import { Form, Field } from 'react-final-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
+import { Link } from 'react-router-dom';
 
 const required = (value) => (value ? undefined : "Required");
 const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
@@ -167,7 +168,7 @@ let DishDetail = ({ dish, comments, ext, postComment, changeimg, dishesLoading, 
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
-                        <Breadcrumb.Item href="/menu">
+                        <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/menu' }} >
                             Menu
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>

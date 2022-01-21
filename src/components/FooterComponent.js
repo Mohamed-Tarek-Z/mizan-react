@@ -22,7 +22,7 @@ function Footer(props) {
                             Heap<br />
                             <i className="fa fa-phone fa-lg"></i>: 01151929374<br />
                             <i className="fa fa-fax fa-lg"></i>: 0444050916<br />
-                            <i className="fa fa-envelope fa-lg"></i>: <Link to="/">
+                            <i className="fa fa-envelope fa-lg"></i>: <Link className="link-unstyled" to="/">
                                 Banned@Doom.com</Link>
                         </address>
                     </div>
