@@ -3,7 +3,9 @@ import { Dishes } from './dishes';
 import { Comments } from './comments';
 import { Leaders } from './leaders';
 import { Promotions } from './promotions';
+import { Favorites } from './favorites';
 import { Ext } from './ext';
+import { Auth } from './auth';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -14,7 +16,9 @@ export let ConfigureStore = () => {
             comments: Comments,
             leaders: Leaders,
             promotions: Promotions,
-            ext: Ext
+            favorites: Favorites,
+            ext: Ext,
+            auth: Auth
         }),
         applyMiddleware(thunk, logger)
     );

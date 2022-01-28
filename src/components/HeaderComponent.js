@@ -17,6 +17,7 @@ class Header extends Component {
         }
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
     toggleModal() {
@@ -25,8 +26,12 @@ class Header extends Component {
 
     handleLogin(event) {
         this.toggleModal();
-        alert("Username = " + this.username.value + " Password = " + this.password.value + " remember = " + this.remember.checked);
+        this.props.loginUser({ username: this.username.value, password: this.password.value });
         event.preventDefault();
+    }
+
+    handleLogout() {
+        this.props.logoutUser();
     }
 
     render() {
@@ -48,6 +53,14 @@ class Header extends Component {
                                         <span className='fa fa-list fa-lg'> Menu </span>
                                     </Link>
                                 </Nav.Link>
+                                {
+                                    this.props.auth.isAuthenticated ?
+                                        <Nav.Link as='div'>
+                                            <Link className='nav-link' to='/favorites'>
+                                                <span className="fa fa-heart fa-lg"></span> My Favorites
+                                            </Link>
+                                        </Nav.Link> : null
+                                }
                                 <Nav.Link as='div'>
                                     <Link className='nav-link' to='/aboutus'>
                                         <span className='fa fa-info fa-lg'> About Us </span>
@@ -61,9 +74,19 @@ class Header extends Component {
                             </Nav>
                             <Nav>
                                 <Nav.Item>
-                                    <Button variant="primary" onClick={this.toggleModal} >
-                                        <span className='fa fa-sign-in fa-lg'> Login</span>
-                                    </Button>
+                                    {!this.props.auth.isAuthenticated ?
+                                        <Button variant="primary" onClick={this.toggleModal} >
+                                            <span className='fa fa-sign-in fa-lg'></span> Login
+                                            {this.props.auth.isFetching ? <span className="fa fa-spinner fa-pulse fa-fw"></span> : null}
+                                        </Button> :
+                                        <div>
+                                            <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
+                                            <Button variant="primary" onClick={this.handleLogout} >
+                                                <span className="fa fa-sign-out fa-lg"></span> Logout
+                                                {this.props.auth.isFetching ? <span className="fa fa-spinner fa-pulse fa-fw"></span> : null}
+                                            </Button>
+                                        </div>
+                                    }
                                 </Nav.Item>
                             </Nav>
                         </Navbar.Collapse>

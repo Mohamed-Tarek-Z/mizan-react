@@ -18,7 +18,7 @@ function Menu({ dishes, ext, changeimg }) {
         return (
             <div className="container">
                 <div className="d-flex justify-content-center">
-                    <h4>{dishes.dishesErrMess}</h4>
+                    <h4>{dishes.errMessage}</h4>
                 </div>
             </div>
         );

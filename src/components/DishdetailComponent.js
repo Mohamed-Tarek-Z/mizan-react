@@ -38,7 +38,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values) {
-        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.comment);
         this.toggleModal();
     }
     render() {
@@ -88,12 +88,21 @@ class CommentForm extends Component {
     }
 }
 
-let RenderDish = ({ dish, ext, changeimg }) => {
+let RenderDish = ({ dish, ext, changeimg, logedin, isFavorite, postFavorite }) => {
     return (
         <div className="col-md-5 col-sm-12 m-1">
             <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
                 <Card onClick={() => changeimg(ext)}>
                     <Card.Img className='img-thumbnail' src={baseUrl + dish.image + ext} alt={dish.name} />
+                    <Card.ImgOverlay>
+                        {
+                            logedin?
+                            <Button variant='outline-primary' onClick={() => isFavorite ? console.log('Already favorite') : postFavorite(dish._id)}>
+                                {isFavorite ? <span className="fa fa-heart"></span> : <span className="fa fa-heart-o"></span>}
+                            </Button>:
+                            <></>
+                        }
+                    </Card.ImgOverlay>
                     <Card.Body>
                         <Card.Title>{dish.name}</Card.Title>
                         <Card.Text>{dish.description}</Card.Text>
@@ -104,7 +113,7 @@ let RenderDish = ({ dish, ext, changeimg }) => {
     );
 }
 
-let RenderComments = ({ comments, postComment, dishId, commentsErrMess }) => {
+let RenderComments = ({ comments, logedin, postComment, dishId, commentsErrMess }) => {
     if (commentsErrMess) {
         return (
             <div className="container">
@@ -132,7 +141,7 @@ let RenderComments = ({ comments, postComment, dishId, commentsErrMess }) => {
                         })}
                     </Stagger>
                 </ul>
-                <CommentForm dishId={dishId} postComment={postComment} />
+                {logedin ? <CommentForm dishId={dishId} postComment={postComment} /> : <h3>Login to Comment</h3>}
             </div>
         );
     } else {
@@ -146,7 +155,7 @@ let RenderComments = ({ comments, postComment, dishId, commentsErrMess }) => {
     }
 }
 
-let DishDetail = ({ dish, comments, ext, postComment, changeimg, dishesLoading, dishesErrMess, commentsErrMess }) => {
+let DishDetail = ({ dish, comments, logedin, isFavorite, postFavorite, ext, postComment, changeimg, dishesLoading, dishesErrMess, commentsErrMess }) => {
     if (dishesLoading)
         return (
             <div className="container">
@@ -179,8 +188,8 @@ let DishDetail = ({ dish, comments, ext, postComment, changeimg, dishesLoading, 
                         <h3>{dish.name}</h3><hr />
                     </div>
                     <div className="row">
-                        <RenderDish dish={dish} ext={ext} changeimg={changeimg} />
-                        <RenderComments comments={comments} postComment={postComment} dishId={dish.id} commentsErrMess={commentsErrMess} />
+                        <RenderDish dish={dish} logedin={logedin} isFavorite={isFavorite} postFavorite={postFavorite} ext={ext} changeimg={changeimg} />
+                        <RenderComments comments={comments} logedin={logedin} postComment={postComment} dishId={dish.id} commentsErrMess={commentsErrMess} />
                     </div>
                 </div>
             </div>
