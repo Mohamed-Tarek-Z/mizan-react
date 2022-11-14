@@ -18,7 +18,7 @@ export let postComment = (dishId, rating, comment) => (dispatch) => {
 
     return fetch(baseUrl + 'comments', {
         method: 'POST',
-        body: JSON.stringify(newComment),
+        body: newComment,
         headers: {
             'Content-Type': 'application/json',
             'Authorization': bearer
@@ -59,7 +59,7 @@ export let postFeedback = (firstname, lastname, telNumber, email, agree, contact
 
     return fetch(baseUrl + 'feedback', {
         method: 'POST',
-        body: JSON.stringify(newFeed),
+        body: newFeed,
         headers: {
             'Content-Type': 'application/json'
         },

@@ -69,13 +69,9 @@ class CommentForm extends Component {
                                         </div>
                                     </div>
                                     <div className="form-group my-2">
-                                        <label>Your Name</label>
-                                        <Field validate={composeValidators(required, minLength(3), maxLength(15))} className="form-control" name="author" component="input" type="text" placeholder="Your Name" />
-                                        <Error name="author" />
-                                    </div>
-                                    <div className="form-group my-2">
                                         <label>Comment</label>
-                                        <Field className="form-control" name="comment" component="textarea" rows="6" placeholder="Leave a comment here" />
+                                        <Field validate={composeValidators(required, minLength(3), maxLength(15))} className="form-control" name="comment" component="textarea" rows="6" placeholder="Leave a comment here" />
+                                        <Error name="comment" />
                                     </div>
                                     <button className="btn btn-primary" type="submit">Submit</button>
                                 </form>

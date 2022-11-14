@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form';
 import { Link } from 'react-router-dom';
 
 const required = (value) => (value ? undefined : "Required");
-const validPhone = (value) => (/^(\+\d{1,2}\s)$/.test(value) ? undefined : "Must be valid US Phone");
+const validPhone = (value) => (/^\d{10}$/.test(value) ? undefined : "Must be valid US Phone");
 const validEmail = (value) => (/[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm.test(value) ? undefined : "Must be valid Email");
 const maxLength = (len) => (val) => (!(val) || (val.length <= len)) ? undefined : `Must be less than ${len} characters`;
 const minLength = (len) => (val) => ((val) && (val.length >= len)) ? undefined : `Must be greater than ${len} characters`;
